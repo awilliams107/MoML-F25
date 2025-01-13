@@ -1,4 +1,4 @@
-These are materials for an introduction to the mathematics of machine learning. The course begins by reviewing/learning concepts from linear algebra. Then, emphasizing an intuitive approach, students learn how to train and construct feedforward neural networks. 
+These are materials for an introduction to the mathematics of machine learning. The course begins by reviewing/learning concepts from linear algebra. Then, emphasizing an intuitive approach, students learn how to construct and train feedforward neural networks. 
 
 Here is the progression I recommend assuming 50-minute class periods:
 
