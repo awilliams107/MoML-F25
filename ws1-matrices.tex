@@ -1,0 +1,505 @@
+\documentclass[12pt]{amsart}
+\usepackage[margin=1in]{geometry}
+
+\usepackage{tikz}
+
+\usepackage{amsmath,amsfonts,amssymb,amsthm}
+\usepackage{enumitem}
+\usepackage{colonequals,multicol}
+\usepackage{xcolor}
+\usepackage{fancyhdr}
+\usepackage{cleveref}
+
+\newcommand{\Q}{\mathbb{Q}}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\R}{\mathbb{R}}
+\DeclareMathOperator{\im}{image}
+\DeclareMathOperator{\id}{id}
+
+
+\theoremstyle{definition} 
+\newtheorem*{definition}{Definition}
+\newtheorem*{example}{Example}
+\newtheorem{theorem}{Theorem}
+\newtheorem{lemma}{Lemma}
+\newtheorem{corollary}{Corollary}
+\newtheorem{proposition}{Proposition}
+\newtheorem{statement}{Statement}
+\newtheorem*{remark}{Remark}
+
+
+
+\begin{document}
+	
+\thispagestyle{fancy}
+\pagestyle{fancy}
+\lhead{\scriptsize University \textit{of} Nebraska-Lincoln}
+\rhead{\scriptsize Math of Machine Learning}
+\chead{Worksheet 1}
+	
+	\
+ 
+\begin{center}
+    {\Large \bf {\sc Vector and Matrix Algebra}}
+\end{center}
+
+%\section*{Vectors}
+\begin{definition}
+    A \textbf{scalar} is a quantity with size, often called magnitude, but no direction. 
+\end{definition}
+
+\noindent For example, the set of real numbers $\R$ are scalars!
+
+\begin{definition}
+    A \textbf{vector} is a quantity with size and direction.
+\end{definition}
+
+\begin{enumerate}[itemsep=0.8em,leftmargin=0pt]
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\item Draw examples of vectors in the Cartesian plane $\R^2$ and 3-dimensional $\R^3$.
+
+\vspace{0.8em}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\noindent The point that a vector starts at is often called the ``tail'' of the vector and where it ends is referred to as the ``head''.
+
+\begin{definition}
+    Let $n$ be a positive integer. The set of points $(x_1,x_2,\ldots,x_n)$ where each $x_1,x_2,\ldots,x_n$ are real numbers is an $n$-tuple of real numbers. We denote the set of all $n$-tuples of real numbers by $\R^n$.
+\end{definition}
+
+\noindent For example, $\R$ is the set of all $1$-tuples and $\R^2$ is the set of all 2-tuples or more familiarly, $xy$-pairs.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\item Notice that vectors are independent of position because they only depend on size and direction. What would be a good way to distinguish between vectors? What do you notice if you were to put every vector's tail at the origin--the point $(0,0,\ldots,0)$ in $\R^n$?
+
+\vspace{0.8em}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\noindent \textbf{Note:} We often use a general subscript $n$, as in $\R^n$, when discussing a fact or property that holds for any real space $\R^n$.
+
+\begin{definition}
+    A vector is in \textbf{standard position} if its tail is on the origin.
+\end{definition}
+
+\begin{definition}
+    Consider a vector $\mathbf{v}$ in standard position and suppose the head of the vector is at the point $(v_1,v_2,\ldots,v_n)$. The \textbf{component form} of $\mathbf{v}$ is 
+    \[
+        \left[\begin{array}{c}
+            v_1 \\
+            v_2 \\
+            \vdots \\
+            v_n
+        \end{array}\right]
+    \]
+\end{definition}
+
+\noindent \textbf{Note.} We are using ``column vector'' notation, but we can also write vectors as ``row vectors'' like $[v_1,v_2,\ldots,v_n]$.\\
+
+\noindent \textbf{``Head$-$Tail'' Formula in $\mathbb{R}^n$.}
+    Suppose a vector's tail is at a point $A=(a_1,a_2,\ldots,a_n)$ and head is at a point $B=(b_1,b_2,\ldots,b_n)$, then the coponent form of this vector $\vec{AB}$ is
+    \[
+        \vec{AB} =
+        \left[\begin{array}{c}
+             b_1 - a_1  \\
+             b_2 - a_2 \\
+             \vdots \\
+             b_n-a_n
+        \end{array}\right]
+    \]
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\item Let $A=(0,-1,3,7)$ and $B=(2,1,-4,1)$. Compute $\vec{AB}$
+
+\vspace{0.8em}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\noindent \textbf{Notation.} We usually write vectors in bold like $\mathbf{v}$ or with an arrow over a letter like $\vec{v}$.
+
+\noindent We can do lots of things with vectors! In particular, we can scale and add them:
+
+\begin{definition}
+    Let $\mathbf{u}=\begin{bmatrix}
+    u_1\\
+    u_2\\
+    \vdots\\
+    u_n
+    \end{bmatrix}$ be a vector in $\R^n$, and let $k$ be a scalar, then
+      $$k\mathbf{u}=k\begin{bmatrix}
+    u_1\\
+    u_2\\
+    \vdots\\
+    u_n
+    \end{bmatrix}=\begin{bmatrix}
+    ku_1\\
+    ku_2\\
+    \vdots\\
+    ku_n
+    \end{bmatrix}$$
+\end{definition}
+
+\begin{definition}
+    Let $\mathbf{u}=\begin{bmatrix}
+    u_1\\
+    u_2\\
+    \vdots\\
+    u_n
+    \end{bmatrix}$ and $\mathbf{v}=\begin{bmatrix}
+    v_1\\
+    v_2\\
+    \vdots\\
+    v_n
+    \end{bmatrix}$ be vectors in $\R^n$.  We define $\mathbf{u}+\mathbf{v}$ by
+      $$\mathbf{u}+\mathbf{v}=\begin{bmatrix}
+    u_1\\
+    u_2\\
+    \vdots\\
+    u_n
+    \end{bmatrix}+\begin{bmatrix}
+    v_1\\
+    v_2\\
+    \vdots\\
+    v_n
+    \end{bmatrix}=\begin{bmatrix}
+    u_1+v_1\\
+    u_2+v_2\\
+    \vdots\\
+    u_n+v_n
+    \end{bmatrix}$$
+\end{definition}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\item Let $\mathbf{u}=\left[\begin{array}{c} 5\\-2\\1 \end{array}\right]$ and $\mathbf{v}=\left[\begin{array}{c} 0\\8\\4 \end{array}\right]$. Compute the following:
+\begin{enumerate}
+    \item $2\mathbf{u}$
+    \item $\mathbf{u}+\mathbf{v}$
+    \item $3\mathbf{u}-\frac{1}{2}\mathbf{v}$ 
+\end{enumerate}
+
+\vspace{0.8em}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{theorem}
+    The following properties hold for vectors $\mathbf{u}$, $\mathbf{v}$ and ${\bf w}$ in $\R^n$ and scalars $k$ and $p$ in $\R$.
+    \begin{enumerate}
+      \item \label{item:commvectoradd} Commutative Property of Addition
+      $$\mathbf{u}+\mathbf{v}=\mathbf{v}+\mathbf{u}$$
+      \item \label{item:assocvectoradd}
+      Associative Property of Addition
+      $$(\mathbf{u}+\mathbf{v})+{\bf w}=\mathbf{u}+(\mathbf{v}+{\bf w})$$
+      \item \label{item:identityvectoradd}
+      Existence of Additive Identity: There exists a vector $\mathbf{0}$ such that
+      $$\mathbf{u}+\mathbf{0}=\mathbf{u}$$
+      \item \label{item:inversevectoradd}
+      Existence of Additive Inverse: For every vector $\mathbf{u}$, there exists a vector $-\mathbf{u}$ such that
+      $$\mathbf{u}+(-\mathbf{u})=\mathbf{0}$$
+      \item\label{item:distvectoradd}
+      Distributive Property over Vector Addition
+      $$k(\mathbf{u}+\mathbf{v})=k\mathbf{u}+k\mathbf{v}$$
+      \item\label{item:distvectoradd2}
+      Distributive Property over Scalar Addition
+      $$(k+p)\mathbf{u}=k\mathbf{u}+p\mathbf{u}$$
+      \item \label{item:assocvectorscalarmult}
+      Associative Property for Scalar Multiplication
+      $$k(p\mathbf{u})=(kp)\mathbf{u}$$
+      \item \label{item:onevectorscalarmult}
+      Multiplication by 1
+      $$1\mathbf{u}=\mathbf{u}$$
+  \end{enumerate}
+\end{theorem}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\item Let $\mathbf{a}=\left[\begin{array}{c} 5\\-2 \end{array}\right]$, $\mathbf{b}=\left[\begin{array}{c} 0\\1 \end{array}\right]$, and $\mathbf{c}=\left[\begin{array}{c} 1\\1 \end{array}\right]$. Compute the following:
+\begin{enumerate}
+    \item $5(\mathbf{a}+2\mathbf{b}-\mathbf{c})$
+    \item $3\mathbf{a}-7\mathbf{a}$
+\end{enumerate}
+
+\vspace{0.8em}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section*{Matrices}
+
+\begin{definition}
+     A \textbf{matrix} is a rectangular array of numbers. The plural form of matrix is \textbf{matrices}. Here is some vocabulary that will help us talk about matrices:
+     \begin{itemize}
+         \item The dimension of a matrix is defined as $m\times n$ where $m$ is the number of rows and $n$ is the number of columns.
+         \item A \textbf{column vector} in $\mathbb{R}^m$ is an $m\times 1$ matrix.
+         \item A \textbf{row vector} in $\mathbb{R}^n$ is an $1\times n$ matrix.
+         \item We refer to the individual entries of the matrix by their position. The \textbf{$(i,j)$-entry} of a matrix is the entry in the $i^{\text{th}}$ row and $j^{\text{th}}$ column.
+     \end{itemize}
+\end{definition}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\item Consider the matrix
+$$M=\begin{bmatrix}
+    1 & 2 & 3 & 4 \\
+    5 & 2 & 8 & 7 \\
+    6 & -9 & 1 & 2
+\end{bmatrix}$$
+\begin{enumerate}
+    \item What are the dimensions of $M$?
+    \item What is the second row of $M$?
+    \item The entry $8$ is in which position?
+    \item What value is in the $(3,2)$ position?
+\end{enumerate}
+
+\vspace{0.8em}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\noindent \textbf{Notation.} We denote the entry in the $i^{th}$ row  and the $j^{th}$ column of an arbitrary $m\times n$ matrix $A$ by $a_{ij}$, and write $A$ in terms of its entries
+as $$A= \begin{bmatrix} a_{ij} \end{bmatrix}=\begin{bmatrix}
+           a_{11} & a_{12}&\dots&a_{1j}&\dots&a_{1n}\\
+           a_{21}&a_{22} &\dots&a_{2j}&\dots &a_{2n}\\
+		\vdots & \vdots&&\vdots&&\vdots\\
+        a_{i1}&a_{i2}&\dots &a_{ij}&\dots &a_{in}\\
+        \vdots & \vdots&&\vdots&&\vdots\\
+		a_{m1}&a_{m2}&\dots &a_{mj}&\dots &a_{mn}
+         \end{bmatrix}$$. 
+
+Occasionally it will be convenient to talk about columns and rows of a matrix $A$ as vectors.  We will use the following notation:
+    $$A=\begin{bmatrix}|&|&&|\\\mathbf{c}_1& \mathbf{c}_2 &\ldots & \mathbf{c}_n\\|&|&&|\end{bmatrix}\quad\text{or}\quad A=\begin{bmatrix}\mathbf{c}_1& \mathbf{c}_2 &\ldots & \mathbf{c}_n\end{bmatrix}$$
+and
+    $$A=\begin{bmatrix}
+    - & \mathbf{r}_1 & - \\ - & \mathbf{r}_2 & - \\ & \vdots & \\ - & \mathbf{r}_m & -
+    \end{bmatrix}\quad\text{or}\quad A=\begin{bmatrix}\mathbf{r}_1\\\mathbf{r}_2\\\vdots\\\mathbf{r}_m\end{bmatrix}$$
+
+\begin{definition}[The Zero Matrix]\label{def:zeromatrix}
+The $m\times n$ \textbf{zero matrix} is the $m\times n$ matrix
+having every entry equal to zero. The zero matrix is
+denoted by $O$.
+\end{definition}
+
+\begin{definition}[Equality of Matrices]\label{def:equalityofmatrices}
+ Let $A=\begin{bmatrix} a_{ij}\end{bmatrix}$ and $B=\begin{bmatrix} b_{ij}\end{bmatrix}$ be two $m \times n$ matrices. Then $A=B$ means
+that $a_{ij}=b_{ij}$ for all $1\leq i\leq m$ and 
+$1\leq j\leq n$.
+\end{definition}
+
+\begin{definition}[Addition of Matrices]\label{def:additionofmatrices}
+Let $A=\begin{bmatrix} a_{ij}\end{bmatrix} $ and $B=\begin{bmatrix} b_{ij}\end{bmatrix}$ be two
+$m\times n$ matrices. Then the \textbf{sum of matrices} $A$ and $B$, denoted by $A+B$,  is an $m \times n$
+matrix  given by 
+$$A+B=\begin{bmatrix}a_{ij}+b_{ij}\end{bmatrix}$$
+
+\end{definition}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\item Find the sum of $A$ and $B$, if possible.
+\begin{equation*}
+A = \begin{bmatrix}
+1 & 2 & 3 \\
+1 & 0 & 4
+\end{bmatrix}, ~
+B = \begin{bmatrix}
+5 & 2 & 3 \\
+-6 & 2 & 1
+\end{bmatrix}
+\end{equation*}
+
+\vspace{0.8em}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{definition}[Scalar Multiplication]\label{def:scalarmultofmatrices}
+If $A=\begin{bmatrix} a_{ij}\end{bmatrix} $ and $k$ is a scalar,
+then $kA=\begin{bmatrix} ka_{ij}\end{bmatrix}$. 
+\end{definition}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\item Find $7A$ if
+
+$$A=\begin{bmatrix}
+2 & 0 \\
+1 & -4
+\end{bmatrix}$$
+
+\vspace{0.8em}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{theorem}[Properties of Matrix Addition]\label{th:propertiesofaddition}
+Let $A,B$ and $C$ be matrices. Then, the following properties  hold. 
+
+\begin{enumerate}
+\item\label{item:mataddcomm} Commutative Law of Addition
+
+$$A+B=B+A$$  
+
+
+\item \label{item:mataddass} Associative Law of Addition
+
+$$\left( A+B\right) +C=A+\left( B+C\right) $$
+
+
+\item\label{item:mataddid} Additive Identity
+\begin{center}
+There exists a zero matrix such that
+\end{center}
+$$A+O=A$$
+
+
+\item\label{item:mataddinv} Additive Inverse
+\begin{center}
+There exists a matrix, $-A$, such that
+\end{center}
+$$A+\left( -A\right) =O $$
+
+\end{enumerate}
+\end{theorem}
+
+\begin{theorem}[Properties of Scalar Multiplication]\label{th:propertiesscalarmult}
+Let $A, B$ be matrices, and $k, p$ be scalars. Then, the following properties properties of scalar multiplication hold.
+\begin{enumerate}
+\item\label{item:scalardistmatadd} Distributive Law over Matrix Addition
+\begin{equation*}
+k \left( A+B\right) =k A+ kB  
+\end{equation*}
+
+\item \label{item:matdistscalaradd}Distributive Law over Scalar Addition
+\begin{equation*}
+\left( k +p \right) A= k A+p A
+\end{equation*}
+
+\item \label{item:scalarmatmultass}Associative Law for Scalar Multiplication
+\begin{equation*}
+k \left( p A\right) = \left( k p \right) A 
+\end{equation*}
+
+\item\label{item:matmult1} Multiplication by $1$
+\begin{equation*}
+1A=A  
+\end{equation*}
+\end{enumerate}
+
+\end{theorem}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\item If 
+$$A=\begin{bmatrix}2&-1\\3&4\end{bmatrix}\quad\text{and}\quad B=\begin{bmatrix}3&0\\-2&1\end{bmatrix}$$
+then compute 
+\begin{enumerate}
+    \item 2(A+B)
+    \item 3A-2B
+\end{enumerate}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{definition} 
+    Let $A$ be an $m \times n$ matrix with columns $\mathbf{a_{1}}, \cdots , \mathbf{a_{n}}$ and let $\mathbf{x}$ be a column vector in $\mathbb{R}^{n}$. We define the \textbf{product} of A and $\mathbf{x}$ as follows:
+    
+    \[A \mathbf{x} = 
+    \begin{bmatrix}
+    \mathbf{a_{1}} & \mathbf{a_{2}} & \cdots & \mathbf{a_{n}}\\
+    \end{bmatrix}
+     \begin{bmatrix}
+    x_{1} \\
+    x_{2} \\
+    \vdots \\ 
+    x_{n}
+    \end{bmatrix}
+    = x_{1}\mathbf{a_{1}}+ x_{2}\mathbf{a_{2}} + \cdots+ x_{n}\mathbf{a_{n}}
+    \]
+\end{definition}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\item Determine which of the following products are defined. If the product is defined, compute it. Otherwise, explain why the product is undefined.
+\begin{equation*}
+\left [ \begin{matrix}
+6 & 5 \\
+2 & -3 \\
+1 & 0 
+\end{matrix} \right ]
+\left[ \begin{matrix}
+2 \\ -3
+\end{matrix} \right]
+\hspace{2.5in}
+\left [ \begin{matrix}
+-4 & 2 \\
+1 & 6 \\
+2 & -3 
+\end{matrix} \right ]
+\left[ \begin{matrix}
+3 \\ -2 \\ 7
+\end{matrix} \right]
+\end{equation*}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\item Compute $A\mathbf{x}$ if $$A=\begin{bmatrix}2&-1&3&2\\0&3&-2&1\\-2&4&1&0\end{bmatrix}\quad\text{and}\quad \vec{x}=\begin{bmatrix}3\\-1\\4\\1\end{bmatrix}$$
+
+%\newpage
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{definition}\label{def:dotproduct}
+  Let $\vec{u}$ and $\vec{v}$ be vectors in $\R^n$.  The \textbf{dot
+    product} of $\vec{u}$ and $\vec{v}$, denoted by
+  $\vec{u}\cdot \vec{v}$, is given by
+  \begin{align*}
+    \vec{u}\cdot\vec{v}=\begin{bmatrix}u_1\\u_2\\\vdots\\u_n\end{bmatrix}\cdot\begin{bmatrix}v_1\\v_2\\\vdots\\v_n\end{bmatrix}=u_1v_1+u_2v_2+\ldots+u_nv_n.
+  \end{align*}
+\end{definition}
+
+\newpage
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\item Compute the following dot products:
+\begin{enumerate}[itemsep=0.5em]
+    \item $\displaystyle \begin{bmatrix}3\\-1\\4\\1\\0\end{bmatrix} \cdot \begin{bmatrix}1\\5\\4\\7\\13\end{bmatrix}=$
+    \item\label{ex:dotProdNotOrtho} $\displaystyle \begin{bmatrix}2\\1\end{bmatrix} \cdot \begin{bmatrix}3\\4 \end{bmatrix}=$
+    \item\label{ex:dotProdOrtho} $\displaystyle \begin{bmatrix}2\\1\end{bmatrix} \cdot \begin{bmatrix}-1\\2 \end{bmatrix}=$
+    \item $\displaystyle \begin{bmatrix}1\\0\end{bmatrix} \cdot \begin{bmatrix}0\\1 \end{bmatrix}=$
+\end{enumerate}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\item Sketch the vectors in parts~\ref{ex:dotProdNotOrtho} and~\ref{ex:dotProdOrtho}. Make a conjecture about when the dot product of two vectors is $0$.
+
+\vspace{.8em}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{definition}\label{def:matmatproduct} Let $A$ be an $m\times n$ matrix whose rows are vectors $\vec{r}_1$, $\vec{r}_2,\ldots ,\vec{r}_n$.  Let $B$ be an $n\times p$ matrix with columns $\vec{b}_1, \vec{b}_2, \ldots, \vec{b}_p$.  Then the entries of the matrix product $AB$ are given by the dot products
+\[AB=\begin{bmatrix}-&\vec{r}_1&-\\-&\vec{r}_2&-\\ &\vdots & \\-&\vec{r}_i &-\\ &\vdots& \\-&\vec{r}_m&-\end{bmatrix}
+\begin{bmatrix}|&|&&|&&|\\\vec{b}_1& \vec{b}_2 &\ldots  & \vec{b}_j&\ldots& \vec{b}_p\\|&|&&|&&|\end{bmatrix}=
+\begin{bmatrix}\vec{r}_1\cdot \vec{b}_1&\vec{r}_1\cdot \vec{b}_2&\ldots&\vec{r}_1\cdot \vec{b}_j&\ldots &\vec{r}_1\cdot \vec{b}_p\\\vec{r}_2\cdot \vec{b}_1&\vec{r}_2\cdot \vec{b}_2&\ldots&\vec{r}_2\cdot \vec{b}_j&\ldots &\vec{r}_2\cdot \vec{b}_p\\\vdots&\vdots&&\vdots&&\vdots\\\vec{r}_i\cdot \vec{b}_1&\vec{r}_i\cdot \vec{b}_2&\ldots&\vec{r}_i\cdot \vec{b}_j&\ldots &\vec{r}_i\cdot \vec{b}_p\\\vdots&\vdots&&\vdots&&\vdots\\\vec{r}_m\cdot \vec{b}_1&\vec{r}_m\cdot \vec{b}_2&\ldots&\vec{r}_m\cdot \vec{b}_j&\ldots &\vec{r}_m\cdot \vec{b}_p
+\end{bmatrix}
+\]
+\end{definition}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\item Suppose $A$ is any $3\times 2$-matrix, $B$ is a $2\times 2$-matrix and $C$ is a $2\times 3$-matrix. Which of the products $AB$, $BC$ and $CA$ are defined? What is the general rule for the product of two matrices to be defined?
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\item Compute the matrix product
+$
+AB = \left [  \begin{matrix} 
+1 & 1 \\
+1 & -1
+\end{matrix} \right ] \left [ \begin{matrix}
+-1 & -1 & 2 & 1 \\
+-1 & 1 & 0 & 1
+\end{matrix} \right ]
+$
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+\item If $a$ and $b$ are real numbers and we know $ab=0$, then either $a=0$ or $b=0$ (or both). This is not true for matrices. Give an example of two $2\times 2$-matrices $A$ and $B$ such that $AB=0$. %You will only need to make matrices with values $0$ and $1$.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\item Provide an example of two $3\times 3$ matrices $A$ and $B$ such that $AB$ does not equal $BA$.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\end{enumerate}
+
+
+\end{document}

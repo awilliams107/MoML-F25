@@ -1,0 +1,175 @@
+\documentclass[12pt]{amsart}
+\usepackage[margin=1in]{geometry}
+
+\usepackage{tikz}
+
+\usepackage{amsmath,amsfonts,amssymb,amsthm}
+\usepackage{enumitem}
+\usepackage{colonequals,multicol}
+\usepackage{xcolor}
+\usepackage{fancyhdr}
+%\usepackage{cleveref}
+\usepackage{hyperref}
+
+\newcommand{\Q}{\mathbb{Q}}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\R}{\mathbb{R}}
+\DeclareMathOperator{\im}{image}
+\DeclareMathOperator{\id}{id}
+
+
+\theoremstyle{definition} 
+\newtheorem*{definition}{Definition}
+\newtheorem*{example}{Example}
+\newtheorem{theorem}{Theorem}
+\newtheorem{lemma}{Lemma}
+\newtheorem{corollary}{Corollary}
+\newtheorem{proposition}{Proposition}
+\newtheorem{statement}{Statement}
+\newtheorem*{remark}{Remark}
+
+
+
+\begin{document}
+	
+\thispagestyle{fancy}
+\pagestyle{fancy}
+\lhead{\scriptsize University \textit{of} Nebraska-Lincoln}
+\rhead{\scriptsize Math of Machine Learning}
+\chead{Worksheet 3}
+	
+	\
+ 
+\begin{center}
+    {\Large \bf {\sc Transformations}}
+\end{center}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\noindent {\bf Note:} Remember that a point in $(x_1,\ldots,x_n)$ in $\R^n$ corresponds to the vector in $\R^n$:
+\(
+    \left[\begin{array}{c}
+         x_1  \\
+         \vdots \\
+         x_n
+    \end{array}\right] .
+\)
+From now on we will refer to points and vectors in $\R^n$ interchangeably.
+
+\begin{definition}
+    A {\bf transformation from $\R^n$ to $\R^m$} is a function that maps vectors in $\R^n$ to vectors in $\R^m$.
+\end{definition}
+
+\noindent {\bf Notation:} We denote a ``transformation $T$ from $\R^n$ to $\R^m$'' by $T:\R^n\to\R^m$. Note that the {\it domain} of $T$ is $\R^n$ and the {\it codomain} of $T$ is $\R^m$.
+
+
+\begin{enumerate}[itemsep=2.5em,leftmargin=0pt]
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\item Consider the transformation defined by $T(\mathbf{x}) = A\mathbf{x}$ where 
+\[
+    A = \left[\begin{array}{rr}
+        ~1 & ~0 \\
+        0 & 1 \\
+        1 & -1
+    \end{array}\right]
+\]
+For this transformation to be defined, what must the domain and codomain of $T$ be?
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\item In general, if $A$ is a $r\times c$ matrix, what is the domain and codomain of the transformation $T(\mathbf{x})= A\mathbf{x}$?
+
+\vspace{2.5em}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{definition}
+    Let $T:\R^n\to\R^m$ be a transformation and suppose for some $\mathbf{x}$ in $\R^n$ and $\mathbf{y}$ in~$\R^m$ that $T({\bf x})={\bf y}$. Then we call $\mathbf{y}$ the \textbf{image} of $\mathbf{x}$ under $T$.
+\end{definition}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\item Consider the square in $\R^2$ with vertices $(1,1)$, $(-1,1)$, $(-1,-1)$, and $(1,-1)$. For each of the transformations $\R^2\to\R^2$ below, plot the square and the image of the square under the transformation.
+\begin{enumerate}
+    \item $\displaystyle R({\bf x}) = \left[\begin{array}{cc} \frac{\sqrt{2}}{2} & -\frac{\sqrt{2}}{2} \\ ~ \\ \frac{\sqrt{2}}{2} & \frac{\sqrt{2}}{2} \end{array}\right] \mathbf{x} $\vspace{1em}
+    \item $\displaystyle S({\bf x}) = \mathbf{x} + \left[\begin{array}{c} 2 \\ 1 \end{array}\right] $\vspace{1em}
+    \item $\displaystyle T({\bf x}) = \left[\begin{array}{cc} 0 & 1 \\ 1 & 0 \end{array}\right] \mathbf{x} + \left[\begin{array}{c} 1 \\ -1 \end{array}\right] $
+\end{enumerate}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\item Geometrically, what are each of the transformations in the previous problem?
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{definition}
+    The standard unit vectors ${\bf e}_1,\dots,{\bf e}_n$ in $\R_n$ are the vectors
+    \[
+        {\bf e}_1 = \left[\begin{array}{c}
+            1 \\
+            0 \\
+            0 \\
+            \vdots \\
+            0
+        \end{array}\right], \qquad
+        {\bf e}_2 = \left[\begin{array}{c}
+            0 \\
+            1 \\
+            0 \\
+            \vdots \\
+            0
+        \end{array}\right], \qquad 
+        \ldots, \qquad
+        {\bf e}_n = \left[\begin{array}{c}
+            0 \\
+            0 \\
+            \vdots \\
+            0 \\
+            1
+        \end{array}\right]
+    \]
+\end{definition}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\item Write the arbitrary vector $\begin{bmatrix}a\\b\\c\end{bmatrix}$ as a linear combination of standard unit vectors in $\R^3$.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\item Let $T:\R^3\to\R^2$ be defined by $T(\mathbf{x})=B\mathbf{x}$ where $B=\begin{bmatrix} 1&2&3\\ 4&5&6 \end{bmatrix}$. Evaluate $T$ at each of the three standard unit vectors in $\R^3$ and compare the results to $T\left(\begin{bmatrix}a\\b\\c\end{bmatrix}\right)$.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\item Determine transformations $T_x:\R^2\to\R^2$ and $T_y:\R^2\to\R^2$ such that $T_x(\mathbf{x})$ is the reflection of ${\bf x}$ across the $x$-axis and $T_y(\mathbf{x})$ is the reflection of ${\bf x}$ across the $y$-axis for any point ${\bf x}$ in $\R^2$.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\item Determine a transformation $R_\theta:\R^2\to\R^2$ such that $R_\theta(\mathbf{x})$ is a rotation of the point ${\bf x}$ about the origin $(0,0)$ by the angle $\theta$ for any point ${\bf x}$ in $\R^2$.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{definition}
+    A transformation $T:\R^m\to\R^n$ is a \textbf{linear transformation} if for all ${\bf x},{\bf y}\in\R^m$ and real numbers $c\in\R$,
+    \begin{enumerate}[label=\arabic*.,itemsep=.25em]
+        \item $\displaystyle T({\bf x} + {\bf y}) = T({\bf x}) + T({\bf y})$ and
+        \item $\displaystyle T(c{\bf x})=cT({\bf x})$.
+    \end{enumerate}
+\end{definition}
+
+\begin{theorem}
+    A transformation $T:\R^m\to\R^n$ is linear if and only if there exists an $n\times m$ matrix $A$ such that $T({\bf x}) = A\bf{x}$ for all $\mathbf{x}\in\R^m$.
+\end{theorem}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\item Consider the linear transformation $T:\R^2\to\R^3$ defined by
+\[
+    T\left( \left[\begin{array}{c} x \\ y \end{array}\right] \right)
+    =
+    \left[\begin{array}{c} x + 2y \\ 3x + 4y \\ 5x + 6y \end{array}\right]
+\]
+Determine the matrix $A$ such that $T({\bf x}) = A\bf{x}$ for all $\mathbf{x}\in\R^2$
+
+\end{enumerate}
+\end{document}

@@ -1,0 +1,186 @@
+\documentclass[12pt]{amsart}
+\usepackage[margin=1in]{geometry}
+
+\usepackage{tikz}
+
+\usepackage{amsmath,amsfonts,amssymb,amsthm}
+\usepackage{enumitem}
+\usepackage{colonequals,multicol}
+\usepackage{xcolor}
+\usepackage{fancyhdr}
+%\usepackage{cleveref}
+\usepackage{hyperref}
+
+\newcommand{\Q}{\mathbb{Q}}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\R}{\mathbb{R}}
+\DeclareMathOperator{\im}{image}
+\DeclareMathOperator{\id}{id}
+
+
+\theoremstyle{definition} 
+\newtheorem*{definition}{Definition}
+\newtheorem*{example}{Example}
+\newtheorem{theorem}{Theorem}
+\newtheorem{lemma}{Lemma}
+\newtheorem{corollary}{Corollary}
+\newtheorem{proposition}{Proposition}
+\newtheorem{statement}{Statement}
+\newtheorem*{remark}{Remark}
+
+
+
+\begin{document}
+	
+\thispagestyle{fancy}
+\pagestyle{fancy}
+\lhead{\scriptsize University \textit{of} Nebraska-Lincoln}
+\rhead{\scriptsize Math of Machine Learning}
+\chead{Worksheet 4}
+	
+	\
+ 
+\begin{center}
+    {\Large \bf {\sc Artificial Neural Networks}}
+\end{center}
+
+\begin{definition}
+    An \textbf{artificial neural network} (\textbf{ANN}) or simply \textbf{neural network} (\textbf{NN}) is a function $\R^m \to \R^n$ determined by a composition of linear transformations, translations, and non-linear functions. We refer to the non-linear functions as \textbf{activation functions}.
+\end{definition}
+
+\begin{example}
+    Define the functions
+    \[
+        f_1:\R^3\to \R^3, ~ f_1\left(\left[\begin{array}{c} x \\ y \\ z \end{array}\right]\right)=\left[\begin{array}{c} \max\{0,x\} \\ \max\{0,y\} \\ \max\{0,z\} \end{array}\right]
+        \qquad\qquad
+        f_2:\R^2\to\R^2, ~ f_2\left(\left[\begin{array}{c} x \\ y \end{array}\right]\right)= \left[\begin{array}{c} \dfrac{e^x}{e^x+e^y} \\ ~ \\ \dfrac{e^y}{e^x+e^y} \end{array}\right],
+    \]
+    translations
+    \[
+        S_1:\R^3\to\R^3, ~ S_1({\bf x}) = {\bf x} + {\bf b}_1, ~~ {\bf b}_1 = \left[\begin{array}{r} -1 \\ 0 \\ 1 \end{array}\right]
+        \qquad
+        S_2:\R^2\to\R^2, ~ S_2({\bf x}) = {\bf x} + {\bf b}_2, ~~ {\bf b}_2 = \left[\begin{array}{r} 1 \\ 1 \end{array}\right]
+    \]
+    and linear transformations
+    \[
+        T_1:\R^4\to\R^3, ~ T_1({\bf x}) = A_1{\bf x}, 
+            ~ A_1=\left[\begin{array}{rrrr}
+                1 & 2 & 0 & 0 \\
+                0 & 1 & 0 & -2 \\
+                -1 & 0 & 1 & 1
+            \end{array}\right]
+        \quad
+        T_2:\R^3\to\R^2, ~ T_2({\bf x}) = A_2{\bf x}, 
+            ~ A_2=\left[\begin{array}{rrr}
+                0 & 1 & 3 \\
+                1 & -1 & 0 
+            \end{array}\right]
+    \]
+    Then the function $M:\R^4\to \R^2$ defined by $M=f_2\circ S_2 \circ T_2 \circ f_1 \circ S_1 \circ T_1$ is a neural network.
+\end{example}
+
+\vspace{.5em}
+\begin{enumerate}[itemsep=2.5em,leftmargin=0pt]
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\item With the neural network $M$ as defined in the previous example, compute $M\left(\left[\begin{array}{c} 1 \\ 0 \\ 1 \\ 2 \end{array}\right]\right)$.
+
+\vspace{1em}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\noindent \textbf{Note:} The activation function $f_1$ is known as ReLU which is short for rectified linear unit and the activation function $f_2$ is known as softmax. Both are defined more generally as functions $\R^n\to\R^n$.
+
+\vspace{-2em}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\item Consider the softmax function $f_2$ in the previous exercise.
+\begin{enumerate}[label=(\alph*),itemsep=.5em]
+    \item Compute $f_2(\mathbf{x})$ for a couple vectors $\mathbf{x}\in\R^2$. What do you notice about the sum of the components of the vector $f_2(\mathbf{x})$ ?
+    \item In general, softmax is $\mathbf{\sigma}:\R^n\to\R^n$ defined by 
+    \[
+        \mathbf{\sigma}\left(\left[\begin{array}{c} x_1 \\ \vdots \\ x_n \end{array}\right]\right)= \left[\begin{array}{c} \dfrac{e^{x_1}}{e^{x_1}+\cdots +e^{x_n}} \\ \vdots \\ \dfrac{e^{x_n}}{e^{x_1}+\cdots +e^{x_n}} \end{array}\right]
+    \]
+    Prove the sum of the components of $\mathbf{\sigma}({\bf x})$ equals $1$ for all ${\bf x}\in \R^n$.
+\end{enumerate}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{definition}
+    The \textbf{loss function} or sometimes \textbf{cost function} of a neural network is a function that computes an error value based on a comparison of an observed value and an actual value.
+\end{definition}
+
+\begin{example}
+    One of the most common loss functions is mean-squared error:
+    \[
+        \text{MSE}:~ \frac{1}{n} \sum_{i=1}^n ||{\bf y}_i - {\bf \hat{\bf y}}_i ||^2
+    \]
+    Here $n$ is the number of observations, ${\bf y}_i$ are the actual values, and $\hat{\bf y}_i$ are the predicted value.
+\end{example}
+
+\noindent\textbf{Note:} In the previous example, $||{\bf y}_i - {\bf \hat{\bf y}}_i||$ refers to the magnitude of the vector ${\bf y}_i - {\bf \hat{\bf y}}_i$. If ${ y}_i$ and ${ \hat{ y}}_i$ are real numbers (vectors with one component), then $||{ y}_i - { \hat{ y}}_i|| = |{ y}_i - { \hat{ y}}_i|$ is the familiar absolute value.
+
+\vspace{-2em}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\item Suppose we have the following dataset: \\
+\begin{center}
+    \begin{tabular}{c|c}
+        $x$ & $y$  \\
+        \hline
+        $1$ & $2$ \\
+        $2$ & $4$ \\
+        $3$ & $5$
+    \end{tabular}
+\end{center}
+Define the neural network $N_0:\R\to\R$ by $N_0(x)=2x+1$. Given an $x$-value, We will use this model to predict its corresponding $y$-value.
+\begin{enumerate}[label=(\alph*),itemsep=.5em]
+    \item We can rewrite $N_0$ as a composition of a linear transformation and translation. What are they?
+    \item Compute the MSE for $N_0$ based on the dataset. That is, $\hat{y}_i = N_0(x_i)$.
+    \item Now consider the neural network $N_1:\R\to\R$ by $N_1(x)=x+\frac{5}{9}$. Compute MSE for~$N_1$.
+    \item For a fixed dataset, what does MSE depend on? What values did you change in your computations from the previous two parts?
+    \item Formally define the MSE loss function for a general neural network $N(x)=mx+b$ for some real numbers $m$ and $b$. That is, define a function $L$ by stating its domain, codomain, and how it assigns domain elements to elements in the codomain.
+    \item Compute $\nabla L$.
+    \item Let the \textit{parameters} for $N_0$ be an initial guess for the minimum of $L$. Now complete one step of the gradient descent algorithm with learning rate $l=\frac{1}{6}$. That is, let $(m_0,b_0)=(2,1)$ and compute
+    \[
+        (m_1, b_1) = ( 2, 1 ) - \frac{1}{6} \nabla L(2,1)
+    \]
+    \textit{Hint:} You should get the \textit{parameters} for $N_1$.
+    \item Complete another step of gradient descent to determine a new model $N_2$ and compute MSE for that model.
+    \item Compare the MSEs of $N_0$, $N_1$, and $N_2$. Which neural network predicts the $y$-values the best?
+\end{enumerate}
+
+\vspace{2.5em}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\noindent Congratulations! You've trained your first neural network! \\
+
+\noindent \textbf{Observation:} To train a neural network, we conduct gradient descent on a loss function which depends solely on the \textit{parameters} of our neural network.
+
+\begin{definition}
+    The \textbf{parameters} of a neural network are the collection of components in the matrices and vectors that correspond to the linear transformations and translations of the neural network.
+\end{definition}
+
+\vspace{-2em}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\item How many parameters do each of the neural networks $N_k$, $k=0,1,2$ from the previous exercise have?
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\item Recall the model $M$ from the example on page~1.
+\begin{enumerate}[label=(\alph*),itemsep=.5em]
+    \item How many parameters does $M$ have? 
+    \item If we use MSE to train $M$, carefully describe the loss function.
+    \item Discuss with your group what gradient descent would entail for such a loss function.
+\end{enumerate}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\item Let's revisit the neural network architecture $N(x)=mx+b$ from earlier. Suppose we add an activation function $\alpha$ to this model so that the neural network is now of the form $N(x)=\alpha(m)x+b$. If we use the MSE loss function, how does the activation function affect our gradient descent algorithm? Specifically, what named rule would you need to compute the partial derivatives in the gradient vector?
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\end{enumerate}
+
+\end{document}

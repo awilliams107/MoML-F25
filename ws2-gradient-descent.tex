@@ -1,0 +1,314 @@
+\documentclass[12pt]{amsart}
+\usepackage[margin=1in]{geometry}
+
+\usepackage{tikz}
+
+\usepackage{amsmath,amsfonts,amssymb,amsthm}
+\usepackage{enumitem}
+\usepackage{colonequals,multicol}
+\usepackage{xcolor}
+\usepackage{fancyhdr}
+%\usepackage{cleveref}
+\usepackage{hyperref}
+
+\newcommand{\Q}{\mathbb{Q}}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\R}{\mathbb{R}}
+\DeclareMathOperator{\im}{image}
+\DeclareMathOperator{\id}{id}
+
+
+\theoremstyle{definition} 
+\newtheorem*{definition}{Definition}
+\newtheorem*{example}{Example}
+\newtheorem{theorem}{Theorem}
+\newtheorem{lemma}{Lemma}
+\newtheorem{corollary}{Corollary}
+\newtheorem{proposition}{Proposition}
+\newtheorem{statement}{Statement}
+\newtheorem*{remark}{Remark}
+
+
+
+\begin{document}
+	
+\thispagestyle{fancy}
+\pagestyle{fancy}
+\lhead{\scriptsize University \textit{of} Nebraska-Lincoln}
+\rhead{\scriptsize Math of Machine Learning}
+\chead{Worksheet 2}
+	
+	\
+ 
+\begin{center}
+    {\Large \bf {\sc Gradient Descent}}
+\end{center}
+
+\noindent \textbf{Recall}: If $f(x)$ is a continuous function, then its derivative $f'(x)=\frac{d}{dx}f(x)$ is the rate of change of that function.
+
+\begin{enumerate}[itemsep=2.5em,leftmargin=0pt]
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\item Compute $f'(x)=\frac{d}{dx}f(x)$ the following derivatives:
+\begin{enumerate}
+    \item $f(x)=x^n$
+    \item $f(x)=e^x$
+    \item $f(x)=\ln(x)$
+    \item $f(x)=\sin(x)$
+\end{enumerate}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\item Let $f$ and $g$ be continuous functions. Compute
+\begin{enumerate}
+    \item $\displaystyle \frac{d}{dx}\left( f(x)g(x) \right)$
+    \item $\displaystyle \frac{d}{dx}\left( \frac{f(x)}{g(x)} \right)$
+    \item $\displaystyle \frac{d}{dx} f\left(g(x)\right)$
+\end{enumerate}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\item What are each of the ``rules'' above called?
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\item\label{ex-deriv} What is the derivative of a continuous function $f(x)$ useful for?
+
+\vspace{2.5em}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{definition}
+    We say $x=a$ is a \textbf{critical point} of a function $f$ if $f'(a)=0$ or $f'(a)$ is undefined.
+\end{definition}
+
+\vspace{-2em}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\item What is special about critical points?
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\item Find and classify the critical points of $g(x)=x^3-3x^2+3x$.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\item\label{ex:deriv2} Can we take derivatives of derivatives? If so, what is the benefit of this? Use $g(x)=x^3-3x^2+3x$ to give an example of your answer.
+
+\vspace{2.5em}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\noindent \textbf{Recall:} {\it Independent variables} are variables that do not depend on each other. 
+
+\begin{definition}
+    A {\bf function $f$ of two independent variables} $x$ and $y$ is a rule that assigns each ordered pair $(x,y)$ in some set $D$ to exactly one number $f(x,y)$
+\end{definition}
+
+\vspace{-2em}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\item Consider $f(x,y)=x^2+xy$ with domain $D=\{(x,y)|x,y\in\R\}$. 
+\begin{enumerate}
+    \item Compute $f(-1,2)$.
+    \item How do we usually denote the set $D$?
+    \item Where does the graph of $f(x,y)$ live?
+    \item Sketch the graph and compare your graph with an online graphing calculator like \href{https://www.desmos.com/3d}{Desmos} or \href{https://www.geogebra.org/3d}{GeoGebra}.
+\end{enumerate}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\item Functions with more than one variable! For example:
+\begin{align*}
+    f(x,y,z) &= x+y\cos(z)-132,~~D=\R^3 \\
+    g(x_1,,x_2,x_3,x_4,x_5) &= x_1x_2+x_3^2+5x_4+x_5^3+1,~~D=\R^5
+\end{align*}
+\begin{enumerate}
+    \item Evaluate the two functions above at specific points in their domain.
+    \item Where does the graph of the functions $f$ and $g$ live? 
+\end{enumerate}
+
+\vspace{2.5em}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{definition}
+    The {\bf domain} of a function is the set of all inputs where the function is defined.
+\end{definition}
+
+\vspace{-2em}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\item Find the domain of the functions:
+\begin{enumerate}
+    \item $f(x,y)=\sqrt{x^2-y}$
+    \item $g(x,y)=\frac{1}{xy}$
+    \item $h(x,y)=x^2+y^2$
+\end{enumerate}
+
+\vspace{2.5em}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{definition}
+    An {\bf $x$-trace} is a curve $z=f(x,c)$ for some constant $c$. Similarly, a {\bf $y$-trace} is a curve $z=f(d,y)$ for some constant $d$.
+\end{definition}
+
+\vspace{-2em}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\item Consider $z=f(x,y)=x^2+y$, $D=\R^2$.
+\begin{enumerate}
+    \item Plot the $x$-traces $z=f(x,0)$ and $z=f(x,1)$ in the $xz$-plane and in $\R^3$.
+    \item Plot the $y$-traces $z=f(0,y)$ and $z=f(2,y)$ in the $yz$-plane and in $\R^3$.
+    \item What are the graphs of each?
+\end{enumerate}
+
+\vspace{2.5em}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{definition}
+    A {\bf level curve} or {\bf contour} of a function $f(x,y)$ is a curve of the form $k=f(x,y)$ for some constant $k$.
+\end{definition}
+
+\vspace{-2em}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\item\label{ex-contours} Again consider $f(x,y)=x^2+y$, $D=\R^2$. Plot multiple contours of this function in the $xy$-plane. Compare your plots to the graph of $f$ in $\R^3$. Save this drawing, you'll need it later!
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\item Think about your answers to exercises \ref{ex-deriv} and \ref{ex:deriv2}. Discuss how you might do similar things with the graphs of functions $z=f(x,y)$. Reference traces and contours in your answer.
+
+\vspace{2.5em}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{definition}
+    The partial derivative of a differentiable function $f(x_1,x_2,\ldots,x_n)$ with respect to the variable $x_i$ is
+    \[
+        \lim_{h\to 0} \frac{f(x_1,\ldots,x_i+h,\ldots,x_n) - f(x_1,\ldots,x_i,\ldots,x_n)}{h}
+    \]
+\end{definition}
+
+\noindent \textbf{Notation.} We use $\frac{\partial f}{\partial x_i}$, $f_{x_i}$, and $\partial_{x_i} f$ to denote the $x_i$-partial derivative of $f$. \\ 
+
+\noindent To compute a partial derivative, you follow the same rules as the usual differentiation that you are familiar with, except you treat all the variables that you are not differentiating as constants.
+
+\vspace{-2em}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\item Consider $f(x,y) = (x^2+y^2)^3 - y$ and $g(x,y)=e^{xy}+2$. Compute:
+\begin{enumerate}
+    \item $f_x$
+    \item $f_y$
+    \item $g_x$
+    \item $g_y$
+\end{enumerate}
+
+\item We can also compute higher-order partial derivatives. For example $f_{xy}=\frac{\partial}{\partial y}\left( \frac{\partial f}{\partial x} \right)$. Let's try some examples with $f=x^2-5xy+y^3$. Compute:
+\begin{enumerate}
+    \item $f_{xy}$
+    \item $f_{xx}$
+    \item $f_{yy}$
+    \item $f_{xyy}$
+\end{enumerate}
+
+\vspace{2.5em}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\noindent \textbf{Chain Rule with Partial Derivatives} Let us assume $z= f(x,y)$ and that both $x$ and $y$ are functions of other variables $u, v$, i.e $x= x(u,v), y= y(u,v)$. Then we can define $\frac{\partial f}{\partial u}, \frac{\partial f}{\partial v}$ using chain rule,
+        $$\frac{\partial f}{\partial u} = \frac{\partial f}{\partial x} \frac{\partial x}{\partial u}+ \frac{\partial f}{\partial y} \frac{\partial y}{\partial u}, \quad  \frac{\partial f}{\partial v} = \frac{\partial f}{\partial x} \frac{\partial x}{\partial v}+ \frac{\partial f}{\partial y} \frac{\partial y}{\partial v}$$
+
+\vspace{-2em}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\item  Let $z= f(x,y) =(x^2 + y^2)^3$, $x = \sin (u-v)$, $y = \cos (u+v)$. Compute $\frac{\partial z}{\partial u}$. 
+
+\vspace{2.5em}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\noindent \textbf{Tangent Plane.} In 2D we can compute tangent lines. In 3D we can compute \textit{tangent planes}. \\
+
+\noindent The \textbf{tangent plane} of the graph of a function $z=f(x,y)$ at a point $(a,b)$ is
+\[
+    y = f(a,b) + f_x(a,b)(x-a) + f_y(a,b)(y-b)
+\]
+
+\vspace{-2em}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\item Consider $f(x,y)=x^2+y$. Compute the tangent plane of $f$ at the point $(2,0)$ and plot both $f$ and this plane in an online graphing calculator.
+
+\vspace{2.5em}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{definition}
+    A \textbf{vector-valued function} is a function whose outputs are vectors.
+\end{definition}
+
+\vspace{-2em}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\item Often we write vector valued functions with angular braces that look like $\langle$ $\rangle$. Consider the function $\vec{F}(x,y)=\langle x^2-y, \sin(x) \rangle$. Compute $\vec{F}$ at a few points in its domain $\R^2$.
+
+\vspace{2.5em}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{definition}
+    The gradient vector of a differentiable function $f(x_1,x_2,\ldots,x_n)$ is the vector-valued function
+    \[
+        \nabla f = \langle f_{x_1}, f_{x_2}, \ldots, f_{x_n} \rangle
+    \]
+\end{definition}
+
+\begin{definition}
+    The \textbf{critical points} of a multivariable function are the points where the gradient vector of the function is the $0$-vector $\mathbf{0}$ or undefined.
+\end{definition}
+
+\noindent \textbf{Note.} There are special rules for classifying critical points which involve partial derivatives. We won't mention them here because most of the functions we'll encounter will be so complicated that it would be nearly impossible to find and classify all of their critical points.
+
+\vspace{-2em}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\item Find the critical points of $f(x,y)=e^y(y^2-x^2)$.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\item The gradient vector is an incredibly powerful tool, even beyond finding critical points. For, $z=f(x,y)=x^2+y$, $D=\R^2$, 
+\begin{enumerate}
+    \item compute $\nabla f$,
+    \item determine the tangent plane at the point $(1,2)$, and
+    \item plot the graph of the function $f$ and the tangent plane of $f$ at $(1,2)$ in an online graphing calculator.
+    \item Go back to your contour plot in \ref{ex-contours}. Plot the gradient vector $\nabla f(1,2)$ so that its starting point is the point $(1,2)$. Also, sketch the line tangent to the contour $f(1,2)$ at the point $(1,2)$ What do you notice? What direction does the gradient vector point towards?
+    \item What do you notice about $-\nabla f(1,2)$? What direction does it point?
+\end{enumerate}
+
+\vspace{2.5em}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{definition}
+    {\bf Gradient descent} is an algorithmic approach to searching for a minimum of a function. Let $f(x_1,x_2,\ldots,x_n)$ be a differentiable function and use vector notation to denote the point $\mathbf{x}=(x_1,x_2,\ldots,x_n)$. Then, a {\bf gradient descent step} is
+    \begin{equation*}
+        \mathbf{x}_{k+1} = \mathbf{x}_{k} - l\nabla f(\mathbf{x}_{k})
+    \end{equation*}
+    where $l$ is some constant which, in machine learning, we call the {\bf learning rate}. Note here we get a sequence of points $\{\mathbf{x}_0,\mathbf{x}_1,\ldots\}$. For ``nice'' situations, with $x_0$ and $l$ chosen efficiently, this sequence converges to a local minimum of $f$.
+
+\end{definition}
+
+\vspace{-2em}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\item Practice the gradient descent algorithm on the functions below. For each, use an online graphing calculator to visualize what is happening both in $\R^3$ and in a contour plot. Try different values of $l$.
+\begin{enumerate}
+    \item $f(x,y)=x^2+y^2$
+    \item $g(x,y)=\cos(x)+y^2-\frac{1}{2}x$
+\end{enumerate}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\item Write down some observations you made while working through the previous exercise.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+\end{enumerate}
+
+
+\end{document}
