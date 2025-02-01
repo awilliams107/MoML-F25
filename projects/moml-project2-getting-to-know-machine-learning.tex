@@ -1,0 +1,78 @@
+\documentclass[12pt]{amsart}
+\usepackage[margin=1in]{geometry}
+
+\usepackage{tikz}
+
+\usepackage{amsmath,amsfonts,amssymb,amsthm}
+\usepackage{enumitem}
+\usepackage{colonequals,multicol}
+\usepackage{xcolor}
+\usepackage{fancyhdr}
+%\usepackage{cleveref}
+\usepackage{hyperref}
+
+\newcommand{\Q}{\mathbb{Q}}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\R}{\mathbb{R}}
+\DeclareMathOperator{\im}{image}
+\DeclareMathOperator{\id}{id}
+
+
+\theoremstyle{definition} 
+\newtheorem*{definition}{Definition}
+\newtheorem*{example}{Example}
+\newtheorem{theorem}{Theorem}
+\newtheorem{lemma}{Lemma}
+\newtheorem{corollary}{Corollary}
+\newtheorem{proposition}{Proposition}
+\newtheorem{statement}{Statement}
+\newtheorem*{remark}{Remark}
+
+
+
+\begin{document}
+	
+\thispagestyle{fancy}
+\pagestyle{fancy}
+\lhead{\scriptsize University \textit{of} Nebraska-Lincoln}
+\rhead{\scriptsize Math of Machine Learning}
+\chead{Project 2}
+	
+	\
+ 
+\begin{center}
+    {\Large \bf {\sc Getting to know Machine Learning}}
+\end{center}
+
+The projects this semester will revolve around machine learning. The following items will become important throughout the semester for the various aspects of this analysis. Working in pairs, you will research and prepare a 10-minute presentation to become an expert in a particular topic about machine learning. Your presentation should be in the form of slides written in LaTeX, PowerPoint, Keynote, etc. and it should contain information such as:
+\begin{itemize}
+\item General information that will provide an overview of your topic;
+\item Factors that directly affect the specifics of your topic;
+\item Best practices or most commonly used architectures/functions/methods--if this is data-dependent, note that and give examples;
+\item Intuition/reasoning behind the most commonly used architectures/functions/methods;
+\item Any other specific information you can find on your topic
+\item Pictures and graphs -- these are always extremely helpful in conveying information fast. Make sure you specify the source for them.
+\end{itemize}
+Please include all references you consulted, including websites, newspaper articles, blogs, podcasts, other collaborators etc. Make sure you support your statements with facts and/or a mathematical/statistical analysis. \\
+
+\noindent List of topics (choose one; first come, first serve): 
+ \begin{enumerate}
+\item Activation Functions (must cover sigmoid, ReLU, and softmax); %()
+\item Loss Functions (must include squared-error and cross-entropy); %()
+\item Optimizers (must cover gradient descent with momentum and Adam optimization method); %()
+\item Lasso and Ridge Regularization; %()
+\item Validation Dataset and tuning hyperparameters (be sure to define the word hyperparameter); %()
+\item Support Vector Machines (SVMs); %()
+\item k-nearest neighbor (kNN); %()
+\item Convolutional Neural Networks (CNNs); %()
+\item Recurrent neural networks (RNNs); %()
+\item Autoencoders and Bottlenecks; %()
+%\item Decision Trees and Random Forests. %()
+ \end{enumerate}
+
+\vspace{.5in}
+
+%\noindent Your slides will be posted on our Canvas page for everyone to reference throughout the course and you will consult fellow students throughout the semester on your expertise.
+
+\end{document}
