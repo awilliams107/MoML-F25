@@ -34,4 +34,4 @@ Here is the progression I recommend assuming 50-minute class periods:
 
 
 ### Acknowledgement
-The creation of parts of these materials were supported by the Nebraska Experimental Math and Outreach Lab and the UNL Grand Challenges catalyst award entitled Quantum Approaches addressing Global Threats.
+The creation of these materials was partially supported by the Nebraska Experimental Math and Outreach Lab and the UNL Grand Challenges catalyst award entitled Quantum Approaches Addressing Global Threats.
