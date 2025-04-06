@@ -31,3 +31,7 @@ Here is the progression I recommend assuming 50-minute class periods:
 
 - Project 3: Advanced Training (from scratch) - Part 2 (1 day or could be homework)
     - Want to improve this by asking students to adapt their code from Jupyter Notebook 3 so that their neural network could have an arbitrary number of hidden layers and softmax as the activation function in the output layer.
+
+
+### Acknowledgement
+The creation of parts of these materials were supported by the Nebraska Experimental Math and Outreach Lab and the UNL Grand Challenges catalyst award entitled Quantum Approaches addressing Global Threats.
